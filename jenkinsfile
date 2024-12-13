@@ -1,0 +1,33 @@
+pipeline{
+    agent{ label 'server'}
+    
+    stages
+    {
+        stage('retrive')
+        {
+            steps
+            {
+             git 'https://github.com/Moin-47/Java-Full-Stack-App.git'   
+            }
+        }
+        
+        stage('check')
+        {
+           steps
+           {
+                sh ''' 
+                 echo y | docker system prune -a
+               '''
+           }
+        }
+        
+        stage('build')
+        {
+          steps
+          {
+              sh 'docker-compose up -d'
+          }
+        }
+    }
+    
+}
